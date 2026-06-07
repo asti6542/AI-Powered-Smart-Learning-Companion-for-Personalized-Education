@@ -282,9 +282,9 @@ h1{font-size:2rem}
     <h2 class="section-title">Apa Kata Pelajar Kami</h2>
     <p class="section-sub">Ribuan pelajar telah merasakan manfaat nyata dari platform LearnAI.</p>
     <div class="testimonials-grid">
-      <div class="testimonial-card"><div class="stars">★★★★★</div><p>"LearnAI benar-benar mengubah cara aku belajar. AI tutornya sabar banget dan selalu bisa menjelaskan hal yang susah!"</p><div class="testimonial-author"><div class="author-avatar" style="background:#6c63ff">AR</div><div><div class="author-name">Andi Rahmat</div><div class="author-role">Mahasiswa Informatika</div></div></div></div>
-      <div class="testimonial-card"><div class="stars">★★★★★</div><p>"Dalam 3 bulan pakai LearnAI, aku berhasil dapat kerja sebagai junior developer. Materinya sangat komprehensif!"</p><div class="testimonial-author"><div class="author-avatar" style="background:#ff6584">SN</div><div><div class="author-name">Siti Nuraini</div><div class="author-role">Junior Developer</div></div></div></div>
-      <div class="testimonial-card"><div class="stars">★★★★★</div><p>"Fitur adaptive learning-nya keren banget. Platform ini benar-benar tahu kelemahan aku dan fokus membantu meningkatkannya."</p><div class="testimonial-author"><div class="author-avatar" style="background:#43e97b">BP</div><div><div class="author-name">Budi Pratama</div><div class="author-role">Desainer UI/UX</div></div></div></div>
+      <div class="testimonial-card"><div class="stars">★★★★★</div><p>"LearnAI benar-benar mengubah cara aku belajar. AI tutornya sabar banget dan selalu bisa menjelaskan hal yang susah!"</p><div class="testimonial-author"><div class="author-avatar" style="background:#6c63ff">AR</div><div><div class="author-name">Asti Zahra</div><div class="author-role">Mahasiswa Informatika</div></div></div></div>
+      <div class="testimonial-card"><div class="stars">★★★★★</div><p>"Dalam 3 bulan pakai LearnAI, aku berhasil dapat kerja sebagai junior developer. Materinya sangat komprehensif!"</p><div class="testimonial-author"><div class="author-avatar" style="background:#ff6584">SN</div><div><div class="author-name">Rina Volni</div><div class="author-role">Junior Developer</div></div></div></div>
+      <div class="testimonial-card"><div class="stars">★★★★★</div><p>"Fitur adaptive learning-nya keren banget. Platform ini benar-benar tahu kelemahan aku dan fokus membantu meningkatkannya."</p><div class="testimonial-author"><div class="author-avatar" style="background:#43e97b">BP</div><div><div class="author-name">Ridho Patra</div><div class="author-role">Desainer UI/UX</div></div></div></div>
     </div>
   </div>
 </section>
@@ -347,31 +347,58 @@ h1{font-size:2rem}
 let chatOpen = false;
 let isTyping = false;
 
-const responses = {
-  default: [
-    "Pertanyaan yang bagus! Saya akan menjelaskan secara bertahap agar mudah dipahami.",
-    "Tentu! Mari kita bahas topik ini. Pertama, kita perlu memahami dasar-dasarnya terlebih dahulu.",
-    "Saya senang kamu tertarik dengan topik ini! Ini adalah area yang sangat menarik.",
-    "Bagus! Saya akan membantu menjelaskan konsep ini dengan cara yang mudah dipahami."
-  ],
-  keywords: {
-    'python': "Python adalah bahasa pemrograman yang sangat populer dan mudah dipelajari! 🐍\n\nKenapa Python cocok untuk pemula:\n✅ Sintaks yang sederhana dan mudah dibaca\n✅ Komunitas yang besar dan aktif\n✅ Digunakan di data science, AI, web development\n✅ Banyak library gratis tersedia\n\nApakah kamu sudah punya pengalaman programming sebelumnya?",
-    'ai': "Artificial Intelligence (AI) adalah simulasi kecerdasan manusia oleh mesin! 🤖\n\n🔹 Machine Learning - Mesin belajar dari data\n🔹 Deep Learning - Neural network berlapis\n🔹 NLP - Pemrosesan bahasa alami\n🔹 Computer Vision - Pengenalan gambar\n\nIngin tahu lebih lanjut tentang bidang AI mana?",
-    'machine learning': "Machine Learning adalah cabang AI di mana komputer belajar dari data tanpa diprogram secara eksplisit! 📊\n\nJenis-jenis ML:\n• Supervised Learning - Belajar dari data berlabel\n• Unsupervised Learning - Menemukan pola sendiri\n• Reinforcement Learning - Belajar dari reward/punishment\n\nContoh nyata: spam filter email, rekomendasi Spotify, deteksi wajah di kamera HP!",
-    'kursus': "Rekomendasi kursus berdasarkan level! 📚\n\n🟢 Pemula:\n• Python untuk Pemula (4.9⭐)\n• HTML & CSS Dasar\n• Logika Pemrograman\n\n🟡 Menengah:\n• Data Science dengan Python\n• Web Development Full-Stack\n• UI/UX Design\n\n🔴 Lanjutan:\n• Machine Learning Engineer\n• Cloud Architecture\n\nKamu tertarik di bidang apa?",
-    'belajar': "Tips belajar efektif dengan LearnAI! 💡\n\n1️⃣ Belajar konsisten 30-60 menit/hari\n2️⃣ Gunakan teknik Pomodoro (25 menit fokus, 5 menit istirahat)\n3️⃣ Praktik langsung setelah belajar teori\n4️⃣ Ajari orang lain apa yang sudah dipelajari\n5️⃣ Review materi sebelum tidur\n\nAI tutor kami akan membantu kamu tetap di jalur yang benar! 🎯",
-    'algoritma': "Algoritma adalah serangkaian instruksi langkah demi langkah untuk menyelesaikan suatu masalah! 🔢\n\nContoh - Algoritma membuat teh:\n1. Rebus air\n2. Masukkan teh celup ke cangkir\n3. Tuang air panas\n4. Tunggu 3-5 menit\n5. Angkat teh celup\n\nAlgoritma yang baik harus:\n✅ Jelas dan tidak ambigu\n✅ Efisien\n✅ Menghasilkan output yang benar",
-    'harga': "Paket LearnAI yang fleksibel! 💰\n\n🆓 FREE - Rp 0/bulan\n• 5 kursus gratis\n• AI Chat terbatas (10 pesan/hari)\n\n⭐ PRO - Rp 99.000/bulan\n• Akses semua kursus\n• AI Chat unlimited\n• Sertifikat premium\n\n🏢 TEAM - Rp 499.000/bulan\n• Semua fitur Pro\n• Dashboard tim\n• Dedicated support"
-  }
-};
+async function sendMessage() {
+  if (isTyping) return;
 
-function getResponse(msg) {
-  const lower = msg.toLowerCase();
-  for (const [key, resp] of Object.entries(responses.keywords)) {
-    if (lower.includes(key)) return resp;
+  const input = document.getElementById('chat-input');
+  const msg = input.value.trim();
+
+  if (!msg) return;
+
+  document.getElementById('quickReplies').style.display = 'none';
+
+  addMsg(msg, 'user');
+  input.value = '';
+
+  isTyping = true;
+
+  const typingDiv = document.createElement('div');
+  typingDiv.className = 'msg typing-indicator';
+  typingDiv.innerHTML = '<span></span><span></span><span></span>';
+
+  document.getElementById('chatMessages').appendChild(typingDiv);
+  document.getElementById('chatMessages').scrollTop = 999999;
+
+  try {
+    const res = await fetch("http://localhost:3000/chat", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({
+        message: msg
+      })
+    });
+
+    const data = await res.json();
+
+    typingDiv.remove();
+
+    addMsg(data.reply, 'bot');
+
+  } catch (err) {
+
+    typingDiv.remove();
+
+    addMsg(
+      "❌ Tidak dapat terhubung ke AI Server. Pastikan server.js sedang berjalan.",
+      'bot'
+    );
+
+    console.error(err);
   }
-  return responses.default[Math.floor(Math.random() * responses.default.length)] +
-    "\n\nTopik: \"" + msg + "\"\n\nSaya siap menjelaskan lebih detail. Apa aspek spesifik yang ingin kamu pelajari?";
+
+  isTyping = false;
 }
 
 function openChatbot() {
@@ -407,26 +434,6 @@ function addMsg(text, type) {
   msgs.scrollTop = msgs.scrollHeight;
 }
 
-function sendMessage() {
-  if (isTyping) return;
-  const input = document.getElementById('chat-input');
-  const msg = input.value.trim();
-  if (!msg) return;
-  document.getElementById('quickReplies').style.display = 'none';
-  addMsg(msg, 'user');
-  input.value = '';
-  isTyping = true;
-  const typingDiv = document.createElement('div');
-  typingDiv.className = 'msg typing-indicator';
-  typingDiv.innerHTML = '<span></span><span></span><span></span>';
-  document.getElementById('chatMessages').appendChild(typingDiv);
-  document.getElementById('chatMessages').scrollTop = 999999;
-  setTimeout(() => {
-    typingDiv.remove();
-    addMsg(getResponse(msg), 'bot');
-    isTyping = false;
-  }, 1000 + Math.random() * 1500);
-}
 </script>
 </body>
 </html>
