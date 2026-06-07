@@ -1,0 +1,432 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>LearnAI - Smart Learning Companion</title>
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@300;400;500;600;700&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+:root{
+  --primary:#1a1a2e;--accent:#6c63ff;--accent2:#ff6584;--accent3:#43e97b;
+  --bg:#f8f9ff;--surface:#fff;--text:#1a1a2e;--muted:#6b7280;
+  --card-shadow:0 4px 24px rgba(108,99,255,0.10);
+}
+body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);overflow-x:hidden}
+nav{background:var(--surface);border-bottom:1px solid #e8e8f0;position:sticky;top:0;z-index:100;padding:0 2rem}
+.nav-inner{max-width:1200px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;height:64px}
+.logo{font-family:'Sora',sans-serif;font-weight:700;font-size:1.3rem;color:var(--accent);display:flex;align-items:center;gap:8px}
+.logo-dot{width:8px;height:8px;background:var(--accent2);border-radius:50%;animation:pulse 2s infinite}
+@keyframes pulse{0%,100%{transform:scale(1);opacity:1}50%{transform:scale(1.5);opacity:.6}}
+.nav-links{display:flex;gap:2rem;list-style:none}
+.nav-links a{text-decoration:none;color:var(--muted);font-size:.9rem;font-weight:500;transition:.2s}
+.nav-links a:hover{color:var(--accent)}
+.nav-cta{background:var(--accent);color:#fff;border:none;padding:.5rem 1.2rem;border-radius:24px;font-size:.9rem;font-weight:600;cursor:pointer;font-family:'DM Sans',sans-serif;transition:.2s}
+.nav-cta:hover{background:#5a52e0;transform:translateY(-1px)}
+.hero{max-width:1200px;margin:0 auto;padding:5rem 2rem 3rem;display:grid;grid-template-columns:1fr 1fr;gap:4rem;align-items:center}
+.hero-badge{display:inline-flex;align-items:center;gap:6px;background:#ede9ff;color:var(--accent);padding:.3rem .8rem;border-radius:20px;font-size:.78rem;font-weight:600;margin-bottom:1.2rem}
+.hero-badge span{width:6px;height:6px;background:var(--accent);border-radius:50%;animation:pulse 1.5s infinite}
+h1{font-family:'Sora',sans-serif;font-size:3rem;font-weight:700;line-height:1.15;margin-bottom:1rem}
+h1 .highlight{background:linear-gradient(135deg,var(--accent),var(--accent2));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.hero-sub{color:var(--muted);font-size:1.05rem;line-height:1.7;margin-bottom:2rem}
+.hero-btns{display:flex;gap:1rem;flex-wrap:wrap}
+.btn-primary{background:var(--accent);color:#fff;border:none;padding:.8rem 1.8rem;border-radius:30px;font-size:.95rem;font-weight:600;cursor:pointer;font-family:'DM Sans',sans-serif;transition:.2s;text-decoration:none;display:inline-flex;align-items:center;gap:6px}
+.btn-primary:hover{background:#5a52e0;transform:translateY(-2px);box-shadow:0 8px 24px rgba(108,99,255,.3)}
+.btn-outline{background:transparent;color:var(--accent);border:2px solid var(--accent);padding:.8rem 1.8rem;border-radius:30px;font-size:.95rem;font-weight:600;cursor:pointer;font-family:'DM Sans',sans-serif;transition:.2s}
+.btn-outline:hover{background:#ede9ff}
+.hero-stats{display:flex;gap:2rem;margin-top:2.5rem}
+.stat{text-align:center}
+.stat-num{font-family:'Sora',sans-serif;font-size:1.5rem;font-weight:700;color:var(--accent)}
+.stat-label{font-size:.8rem;color:var(--muted)}
+.hero-visual{position:relative}
+.hero-card{background:var(--surface);border-radius:20px;padding:1.5rem;box-shadow:var(--card-shadow);border:1px solid #e8e8f0}
+.hero-card-header{display:flex;align-items:center;gap:10px;margin-bottom:1rem}
+.ai-avatar{width:40px;height:40px;background:linear-gradient(135deg,var(--accent),var(--accent2));border-radius:50%;display:flex;align-items:center;justify-content:center;color:#fff;font-size:1.1rem}
+.ai-name{font-weight:600;font-size:.9rem}
+.ai-status{font-size:.75rem;color:#22c55e;display:flex;align-items:center;gap:4px}
+.ai-status::before{content:'';width:6px;height:6px;background:#22c55e;border-radius:50%;display:inline-block}
+.chat-bubble{padding:.7rem 1rem;border-radius:12px;font-size:.85rem;line-height:1.5;margin-bottom:.5rem;max-width:85%}
+.bubble-ai{background:#f3f0ff;color:var(--text)}
+.bubble-user{background:var(--accent);color:#fff;margin-left:auto}
+.typing{display:flex;gap:4px;padding:.7rem 1rem;background:#f3f0ff;border-radius:12px;width:fit-content}
+.typing span{width:6px;height:6px;background:var(--accent);border-radius:50%;animation:blink 1.2s infinite}
+.typing span:nth-child(2){animation-delay:.2s}
+.typing span:nth-child(3){animation-delay:.4s}
+@keyframes blink{0%,100%{opacity:.3}50%{opacity:1}}
+.float-card{position:absolute;background:var(--surface);border-radius:12px;padding:.7rem 1rem;box-shadow:var(--card-shadow);border:1px solid #e8e8f0;font-size:.8rem}
+.float-card.top{top:-20px;right:-20px;display:flex;align-items:center;gap:8px}
+.float-card.bottom{bottom:-15px;left:-15px}
+.section{max-width:1200px;margin:0 auto;padding:4rem 2rem}
+.section-label{text-align:center;color:var(--accent);font-weight:600;font-size:.85rem;letter-spacing:.08em;text-transform:uppercase;margin-bottom:.8rem}
+.section-title{text-align:center;font-family:'Sora',sans-serif;font-size:2.2rem;font-weight:700;margin-bottom:.8rem}
+.section-sub{text-align:center;color:var(--muted);max-width:500px;margin:0 auto 3rem;line-height:1.7}
+.features-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.5rem}
+.feature-card{background:var(--surface);border-radius:16px;padding:1.8rem;border:1px solid #e8e8f0;transition:.2s;cursor:default}
+.feature-card:hover{box-shadow:var(--card-shadow);transform:translateY(-3px);border-color:#d0c8ff}
+.feature-icon{width:48px;height:48px;border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:1.4rem;margin-bottom:1rem}
+.feature-card h3{font-family:'Sora',sans-serif;font-size:1rem;font-weight:600;margin-bottom:.5rem}
+.feature-card p{color:var(--muted);font-size:.88rem;line-height:1.6}
+.courses-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.5rem}
+.course-card{background:var(--surface);border-radius:16px;overflow:hidden;border:1px solid #e8e8f0;transition:.2s;cursor:pointer}
+.course-card:hover{box-shadow:var(--card-shadow);transform:translateY(-3px)}
+.course-thumb{height:120px;display:flex;align-items:center;justify-content:center;font-size:3rem}
+.course-body{padding:1.2rem}
+.course-tag{font-size:.72rem;font-weight:600;padding:.2rem .6rem;border-radius:10px;display:inline-block;margin-bottom:.6rem}
+.course-card h3{font-family:'Sora',sans-serif;font-size:.95rem;font-weight:600;margin-bottom:.4rem}
+.course-meta{display:flex;justify-content:space-between;align-items:center;margin-top:.8rem;font-size:.8rem;color:var(--muted)}
+.course-progress{height:4px;background:#e8e8f0;border-radius:2px;margin-top:.8rem}
+.course-progress-fill{height:100%;border-radius:2px;background:linear-gradient(90deg,var(--accent),var(--accent2))}
+.testimonials-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.5rem}
+.testimonial-card{background:var(--surface);border-radius:16px;padding:1.5rem;border:1px solid #e8e8f0}
+.stars{color:#f59e0b;margin-bottom:.8rem;font-size:.9rem}
+.testimonial-card p{color:var(--muted);font-size:.88rem;line-height:1.6;margin-bottom:1rem}
+.testimonial-author{display:flex;align-items:center;gap:10px}
+.author-avatar{width:36px;height:36px;border-radius:50%;display:flex;align-items:center;justify-content:center;color:#fff;font-size:.8rem;font-weight:700}
+.author-name{font-weight:600;font-size:.85rem}
+.author-role{color:var(--muted);font-size:.75rem}
+.cta-section{background:linear-gradient(135deg,var(--accent) 0%,#9c63ff 100%);margin:2rem;border-radius:24px;padding:4rem 2rem;text-align:center;color:#fff}
+.cta-section h2{font-family:'Sora',sans-serif;font-size:2rem;font-weight:700;margin-bottom:.8rem}
+.cta-section p{opacity:.85;margin-bottom:2rem;font-size:1rem}
+.btn-white{background:#fff;color:var(--accent);border:none;padding:.8rem 2rem;border-radius:30px;font-size:.95rem;font-weight:700;cursor:pointer;font-family:'DM Sans',sans-serif;transition:.2s}
+.btn-white:hover{transform:translateY(-2px);box-shadow:0 8px 24px rgba(0,0,0,.2)}
+.chatbot-fab{position:fixed;bottom:2rem;right:2rem;z-index:1000}
+.fab-btn{width:60px;height:60px;background:linear-gradient(135deg,var(--accent),var(--accent2));border-radius:50%;border:none;cursor:pointer;box-shadow:0 4px 20px rgba(108,99,255,.4);display:flex;align-items:center;justify-content:center;font-size:1.5rem;transition:.2s;color:#fff}
+.fab-btn:hover{transform:scale(1.1)}
+.chat-window{position:fixed;bottom:5rem;right:2rem;width:360px;height:500px;background:var(--surface);border-radius:20px;box-shadow:0 8px 40px rgba(0,0,0,.15);border:1px solid #e8e8f0;display:flex;flex-direction:column;z-index:1000;overflow:hidden;transform:scale(0);transform-origin:bottom right;transition:.3s cubic-bezier(.34,1.56,.64,1);opacity:0}
+.chat-window.open{transform:scale(1);opacity:1}
+.chat-header{background:linear-gradient(135deg,var(--accent),#9c63ff);padding:1rem 1.2rem;display:flex;align-items:center;justify-content:space-between;color:#fff}
+.chat-header-info{display:flex;align-items:center;gap:10px}
+.chat-avatar{width:36px;height:36px;background:rgba(255,255,255,.2);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:1.1rem}
+.chat-title{font-weight:600;font-size:.95rem}
+.chat-subtitle{font-size:.75rem;opacity:.8}
+.close-btn{background:none;border:none;color:#fff;cursor:pointer;font-size:1.2rem;opacity:.8;padding:4px}
+.close-btn:hover{opacity:1}
+.chat-messages{flex:1;overflow-y:auto;padding:1rem;display:flex;flex-direction:column;gap:.6rem}
+.chat-messages::-webkit-scrollbar{width:4px}
+.chat-messages::-webkit-scrollbar-thumb{background:#d0c8ff;border-radius:2px}
+.msg{max-width:80%;padding:.7rem 1rem;border-radius:14px;font-size:.85rem;line-height:1.5;animation:msgIn .2s ease}
+@keyframes msgIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
+.msg.bot{background:#f3f0ff;color:var(--text);border-bottom-left-radius:4px;align-self:flex-start}
+.msg.user{background:var(--accent);color:#fff;border-bottom-right-radius:4px;align-self:flex-end}
+.msg.typing-indicator{background:#f3f0ff;align-self:flex-start;display:flex;gap:5px;align-items:center;padding:.7rem 1rem}
+.msg.typing-indicator span{width:7px;height:7px;background:var(--accent);border-radius:50%;animation:blink 1.2s infinite}
+.msg.typing-indicator span:nth-child(2){animation-delay:.2s}
+.msg.typing-indicator span:nth-child(3){animation-delay:.4s}
+.chat-input-area{padding:.8rem;border-top:1px solid #e8e8f0;display:flex;gap:.5rem;background:#fafafa}
+#chat-input{flex:1;border:1px solid #e8e8f0;border-radius:20px;padding:.6rem 1rem;font-size:.85rem;font-family:'DM Sans',sans-serif;outline:none;background:#fff;color:var(--text)}
+#chat-input:focus{border-color:var(--accent)}
+.send-btn{background:var(--accent);color:#fff;border:none;border-radius:50%;width:36px;height:36px;cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:1rem;transition:.2s;flex-shrink:0}
+.send-btn:hover{background:#5a52e0}
+.quick-replies{padding:0 1rem .6rem;display:flex;gap:.4rem;flex-wrap:wrap}
+.qr-btn{border:1px solid #d0c8ff;background:#f3f0ff;color:var(--accent);border-radius:14px;padding:.3rem .7rem;font-size:.75rem;cursor:pointer;font-family:'DM Sans',sans-serif;transition:.2s}
+.qr-btn:hover{background:#ede9ff}
+footer{background:var(--primary);color:#fff;padding:3rem 2rem 1.5rem}
+.footer-inner{max-width:1200px;margin:0 auto}
+.footer-grid{display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:2rem;margin-bottom:2rem}
+.footer-col h4{font-family:'Sora',sans-serif;font-size:.9rem;margin-bottom:.8rem}
+.footer-col ul{list-style:none}
+.footer-col ul li{margin-bottom:.5rem}
+.footer-col ul li a{color:rgba(255,255,255,.5);text-decoration:none;font-size:.85rem;transition:.2s}
+.footer-col ul li a:hover{color:#fff}
+.footer-bottom{border-top:1px solid rgba(255,255,255,.1);padding-top:1.2rem;display:flex;justify-content:space-between;align-items:center;font-size:.8rem;color:rgba(255,255,255,.4)}
+@media(max-width:900px){
+.hero{grid-template-columns:1fr;gap:2rem}
+.features-grid,.courses-grid,.testimonials-grid{grid-template-columns:1fr 1fr}
+.footer-grid{grid-template-columns:1fr 1fr}
+}
+@media(max-width:600px){
+h1{font-size:2rem}
+.features-grid,.courses-grid,.testimonials-grid{grid-template-columns:1fr}
+.chat-window{width:calc(100vw - 2rem);right:1rem}
+.nav-links{display:none}
+}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-inner">
+    <div class="logo"><span class="logo-dot"></span>LearnAI</div>
+    <ul class="nav-links">
+      <li><a href="#features">Fitur</a></li>
+      <li><a href="#courses">Kursus</a></li>
+      <li><a href="#testimonials">Testimoni</a></li>
+      <li><a href="#chatbot-section">Chatbot AI</a></li>
+    </ul>
+    <button class="nav-cta" onclick="openChatbot()">Mulai Belajar Gratis</button>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section style="background:var(--surface)">
+  <div class="hero">
+    <div class="hero-content">
+      <div class="hero-badge"><span></span>AI-Powered Learning Platform</div>
+      <h1>Smart Learning<br>Companion untuk<br><span class="highlight">Pendidikan Personal</span></h1>
+      <p class="hero-sub">Platform pembelajaran cerdas berbasis AI yang menyesuaikan materi dengan gaya belajar unikmu. Belajar lebih efektif, lebih menyenangkan, dan lebih personal.</p>
+      <div class="hero-btns">
+        <button class="btn-primary" onclick="openChatbot()">🤖 Chat dengan AI Tutor</button>
+        <button class="btn-outline">Lihat Kursus</button>
+      </div>
+      <div class="hero-stats">
+        <div class="stat"><div class="stat-num">50K+</div><div class="stat-label">Pelajar Aktif</div></div>
+        <div class="stat"><div class="stat-num">200+</div><div class="stat-label">Kursus Tersedia</div></div>
+        <div class="stat"><div class="stat-num">98%</div><div class="stat-label">Kepuasan Pengguna</div></div>
+      </div>
+    </div>
+    <div class="hero-visual">
+      <div class="float-card top">
+        <div style="width:32px;height:32px;background:#ede9ff;border-radius:8px;display:flex;align-items:center;justify-content:center">🏆</div>
+        <div><div style="font-weight:600;font-size:.78rem">Level Naik!</div><div style="font-size:.72rem;color:var(--muted)">Matematika Dasar</div></div>
+      </div>
+      <div class="hero-card">
+        <div class="hero-card-header">
+          <div class="ai-avatar">🤖</div>
+          <div><div class="ai-name">LearnAI Assistant</div><div class="ai-status">Online & Siap Membantu</div></div>
+        </div>
+        <div class="chat-bubble bubble-ai">Halo! Aku AI tutor personalmu. Hari ini kita belajar apa? 😊</div>
+        <div class="chat-bubble bubble-user">Aku mau belajar Python untuk pemula</div>
+        <div class="chat-bubble bubble-ai">Bagus! Mari mulai dari konsep dasar variabel dan tipe data...</div>
+        <div class="typing"><span></span><span></span><span></span></div>
+      </div>
+      <div class="float-card bottom" style="display:flex;align-items:center;gap:10px">
+        <div style="font-size:1.2rem">📈</div>
+        <div><div style="font-size:.75rem;color:var(--muted)">Progress Minggu Ini</div><div style="font-weight:700;font-size:.85rem;color:var(--accent)">+42% lebih cepat!</div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FEATURES -->
+<section id="features" style="background:var(--bg)">
+  <div class="section">
+    <div class="section-label">Mengapa LearnAI?</div>
+    <h2 class="section-title">Fitur Unggulan Platform Kami</h2>
+    <p class="section-sub">Teknologi AI terdepan yang dirancang khusus untuk pengalaman belajar yang benar-benar personal.</p>
+    <div class="features-grid">
+      <div class="feature-card"><div class="feature-icon" style="background:#ede9ff">🧠</div><h3>Adaptive Learning AI</h3><p>AI kami menganalisis pola belajarmu dan menyesuaikan materi secara real-time sesuai kebutuhan dan kemampuanmu.</p></div>
+      <div class="feature-card"><div class="feature-icon" style="background:#fff0f3">💬</div><h3>Chatbot Tutor 24/7</h3><p>Tanya apa saja, kapan saja. AI tutor kami siap menjawab pertanyaan dan menjelaskan konsep dengan cara yang mudah dipahami.</p></div>
+      <div class="feature-card"><div class="feature-icon" style="background:#f0fdf4">📊</div><h3>Analytics Belajar</h3><p>Pantau progress belajarmu dengan dashboard analytics yang detail. Ketahui kekuatan dan area yang perlu ditingkatkan.</p></div>
+      <div class="feature-card"><div class="feature-icon" style="background:#fffbeb">🎯</div><h3>Learning Path Personal</h3><p>Jalur pembelajaran yang dirancang khusus untukmu berdasarkan tujuan, waktu tersedia, dan gaya belajarmu.</p></div>
+      <div class="feature-card"><div class="feature-icon" style="background:#eff6ff">🏆</div><h3>Gamifikasi & Reward</h3><p>Tetap termotivasi dengan sistem poin, badge, dan leaderboard yang membuat proses belajar lebih menyenangkan.</p></div>
+      <div class="feature-card"><div class="feature-icon" style="background:#fdf4ff">🤝</div><h3>Komunitas Belajar</h3><p>Bergabung dengan ribuan pelajar lainnya, diskusi, kolaborasi, dan belajar bersama dalam komunitas yang suportif.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- COURSES -->
+<section id="courses" style="background:var(--surface)">
+  <div class="section">
+    <div class="section-label">Kursus Populer</div>
+    <h2 class="section-title">Mulai Belajar Sekarang</h2>
+    <p class="section-sub">Ratusan kursus berkualitas tinggi di berbagai bidang, didukung oleh AI tutor yang siap membantumu kapan saja.</p>
+    <div class="courses-grid">
+      <div class="course-card">
+        <div class="course-thumb" style="background:linear-gradient(135deg,#667eea,#764ba2)">🐍</div>
+        <div class="course-body">
+          <span class="course-tag" style="background:#ede9ff;color:#6c63ff">Pemrograman</span>
+          <h3>Python untuk Pemula</h3>
+          <p style="color:var(--muted);font-size:.82rem">Belajar Python dari nol hingga mampu membuat program sederhana.</p>
+          <div class="course-meta"><span>⭐ 4.9 (2.4k)</span><span>📚 42 Pelajaran</span></div>
+          <div class="course-progress"><div class="course-progress-fill" style="width:65%"></div></div>
+          <div style="font-size:.75rem;color:var(--muted);margin-top:.3rem">65% selesai</div>
+        </div>
+      </div>
+      <div class="course-card">
+        <div class="course-thumb" style="background:linear-gradient(135deg,#f093fb,#f5576c)">📊</div>
+        <div class="course-body">
+          <span class="course-tag" style="background:#fff0f3;color:#ff6584">Data Science</span>
+          <h3>Data Science dengan AI</h3>
+          <p style="color:var(--muted);font-size:.82rem">Analisis data, visualisasi, dan machine learning untuk pemula.</p>
+          <div class="course-meta"><span>⭐ 4.8 (1.8k)</span><span>📚 56 Pelajaran</span></div>
+          <div class="course-progress"><div class="course-progress-fill" style="width:30%"></div></div>
+          <div style="font-size:.75rem;color:var(--muted);margin-top:.3rem">30% selesai</div>
+        </div>
+      </div>
+      <div class="course-card">
+        <div class="course-thumb" style="background:linear-gradient(135deg,#4facfe,#00f2fe)">🎨</div>
+        <div class="course-body">
+          <span class="course-tag" style="background:#eff6ff;color:#3b82f6">Design</span>
+          <h3>UI/UX Design Modern</h3>
+          <p style="color:var(--muted);font-size:.82rem">Desain interface yang indah dan user-friendly dengan Figma.</p>
+          <div class="course-meta"><span>⭐ 4.9 (3.1k)</span><span>📚 38 Pelajaran</span></div>
+          <div class="course-progress"><div class="course-progress-fill" style="width:10%"></div></div>
+          <div style="font-size:.75rem;color:var(--muted);margin-top:.3rem">Baru dimulai</div>
+        </div>
+      </div>
+    </div>
+    <div style="text-align:center;margin-top:2rem"><button class="btn-outline">Lihat Semua Kursus →</button></div>
+  </div>
+</section>
+
+<!-- CHATBOT SECTION -->
+<section id="chatbot-section" style="background:var(--bg)">
+  <div class="section">
+    <div class="section-label">AI Tutor Interaktif</div>
+    <h2 class="section-title">Coba Chat dengan AI Tutor</h2>
+    <p class="section-sub">Klik tombol chatbot di pojok kanan bawah atau coba beberapa pertanyaan populer berikut ini.</p>
+    <div style="display:flex;gap:1rem;flex-wrap:wrap;justify-content:center">
+      <button class="qr-btn" style="padding:.6rem 1.2rem;font-size:.85rem" onclick="openChatbot();setTimeout(()=>sendQuickMsg('Apa itu machine learning?'),400)">🤖 Apa itu Machine Learning?</button>
+      <button class="qr-btn" style="padding:.6rem 1.2rem;font-size:.85rem" onclick="openChatbot();setTimeout(()=>sendQuickMsg('Rekomendasikan kursus untuk pemula'),400)">📚 Rekomendasikan Kursus</button>
+      <button class="qr-btn" style="padding:.6rem 1.2rem;font-size:.85rem" onclick="openChatbot();setTimeout(()=>sendQuickMsg('Bagaimana cara belajar efektif?'),400)">💡 Tips Belajar Efektif</button>
+      <button class="qr-btn" style="padding:.6rem 1.2rem;font-size:.85rem" onclick="openChatbot();setTimeout(()=>sendQuickMsg('Jelaskan konsep algoritma'),400)">🔢 Jelaskan Algoritma</button>
+    </div>
+  </div>
+</section>
+
+<!-- TESTIMONIALS -->
+<section id="testimonials" style="background:var(--surface)">
+  <div class="section">
+    <div class="section-label">Testimoni</div>
+    <h2 class="section-title">Apa Kata Pelajar Kami</h2>
+    <p class="section-sub">Ribuan pelajar telah merasakan manfaat nyata dari platform LearnAI.</p>
+    <div class="testimonials-grid">
+      <div class="testimonial-card"><div class="stars">★★★★★</div><p>"LearnAI benar-benar mengubah cara aku belajar. AI tutornya sabar banget dan selalu bisa menjelaskan hal yang susah!"</p><div class="testimonial-author"><div class="author-avatar" style="background:#6c63ff">AR</div><div><div class="author-name">Andi Rahmat</div><div class="author-role">Mahasiswa Informatika</div></div></div></div>
+      <div class="testimonial-card"><div class="stars">★★★★★</div><p>"Dalam 3 bulan pakai LearnAI, aku berhasil dapat kerja sebagai junior developer. Materinya sangat komprehensif!"</p><div class="testimonial-author"><div class="author-avatar" style="background:#ff6584">SN</div><div><div class="author-name">Siti Nuraini</div><div class="author-role">Junior Developer</div></div></div></div>
+      <div class="testimonial-card"><div class="stars">★★★★★</div><p>"Fitur adaptive learning-nya keren banget. Platform ini benar-benar tahu kelemahan aku dan fokus membantu meningkatkannya."</p><div class="testimonial-author"><div class="author-avatar" style="background:#43e97b">BP</div><div><div class="author-name">Budi Pratama</div><div class="author-role">Desainer UI/UX</div></div></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<div style="padding:0 2rem 2rem">
+  <div class="cta-section">
+    <h2>Siap Mulai Perjalanan Belajarmu?</h2>
+    <p>Bergabung dengan 50.000+ pelajar yang sudah merasakan manfaat LearnAI. Gratis untuk 30 hari pertama!</p>
+    <button class="btn-white" onclick="openChatbot()">🚀 Mulai Gratis Sekarang</button>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-inner">
+    <div class="footer-grid">
+      <div>
+        <div style="font-family:'Sora',sans-serif;font-weight:700;font-size:1.1rem;color:#fff;display:flex;align-items:center;gap:8px;margin-bottom:.8rem">
+          <span style="width:8px;height:8px;background:#ff6584;border-radius:50%;display:inline-block"></span>LearnAI
+        </div>
+        <p style="color:rgba(255,255,255,.5);font-size:.85rem;line-height:1.6">Platform pembelajaran cerdas berbasis AI untuk pendidikan yang lebih personal, efektif, dan menyenangkan.</p>
+      </div>
+      <div class="footer-col"><h4>Platform</h4><ul><li><a href="#">Kursus</a></li><li><a href="#">AI Tutor</a></li><li><a href="#">Learning Path</a></li><li><a href="#">Sertifikasi</a></li></ul></div>
+      <div class="footer-col"><h4>Perusahaan</h4><ul><li><a href="#">Tentang Kami</a></li><li><a href="#">Karir</a></li><li><a href="#">Blog</a></li><li><a href="#">Press</a></li></ul></div>
+      <div class="footer-col"><h4>Support</h4><ul><li><a href="#">Pusat Bantuan</a></li><li><a href="#">Hubungi Kami</a></li><li><a href="#">Kebijakan Privasi</a></li><li><a href="#">Syarat & Ketentuan</a></li></ul></div>
+    </div>
+    <div class="footer-bottom"><span>© 2025 LearnAI. Hak cipta dilindungi.</span><span>Made with ❤️ in Indonesia</span></div>
+  </div>
+</footer>
+
+<!-- CHATBOT -->
+<div class="chatbot-fab">
+  <div class="chat-window" id="chatWindow">
+    <div class="chat-header">
+      <div class="chat-header-info">
+        <div class="chat-avatar">🤖</div>
+        <div><div class="chat-title">LearnAI Assistant</div><div class="chat-subtitle">AI Tutor • Online sekarang</div></div>
+      </div>
+      <button class="close-btn" onclick="closeChatbot()">✕</button>
+    </div>
+    <div class="chat-messages" id="chatMessages">
+      <div class="msg bot">👋 Halo! Saya LearnAI Assistant, tutor AI personalmu. Ada yang bisa saya bantu hari ini?</div>
+      <div class="msg bot">Kamu bisa tanya seputar materi pelajaran, minta rekomendasi kursus, atau diskusi topik apapun! 😊</div>
+    </div>
+    <div class="quick-replies" id="quickReplies">
+      <button class="qr-btn" onclick="sendQuickMsg('Rekomendasi kursus untuk pemula')">📚 Kursus Pemula</button>
+      <button class="qr-btn" onclick="sendQuickMsg('Jelaskan tentang AI')">🤖 Apa itu AI?</button>
+      <button class="qr-btn" onclick="sendQuickMsg('Tips belajar efektif')">💡 Tips Belajar</button>
+    </div>
+    <div class="chat-input-area">
+      <input type="text" id="chat-input" placeholder="Ketik pertanyaanmu..." onkeypress="handleKey(event)">
+      <button class="send-btn" onclick="sendMessage()">➤</button>
+    </div>
+  </div>
+  <button class="fab-btn" id="fabBtn" onclick="openChatbot()" title="Chat dengan AI Tutor">🤖</button>
+</div>
+
+<script>
+let chatOpen = false;
+let isTyping = false;
+
+const responses = {
+  default: [
+    "Pertanyaan yang bagus! Saya akan menjelaskan secara bertahap agar mudah dipahami.",
+    "Tentu! Mari kita bahas topik ini. Pertama, kita perlu memahami dasar-dasarnya terlebih dahulu.",
+    "Saya senang kamu tertarik dengan topik ini! Ini adalah area yang sangat menarik.",
+    "Bagus! Saya akan membantu menjelaskan konsep ini dengan cara yang mudah dipahami."
+  ],
+  keywords: {
+    'python': "Python adalah bahasa pemrograman yang sangat populer dan mudah dipelajari! 🐍\n\nKenapa Python cocok untuk pemula:\n✅ Sintaks yang sederhana dan mudah dibaca\n✅ Komunitas yang besar dan aktif\n✅ Digunakan di data science, AI, web development\n✅ Banyak library gratis tersedia\n\nApakah kamu sudah punya pengalaman programming sebelumnya?",
+    'ai': "Artificial Intelligence (AI) adalah simulasi kecerdasan manusia oleh mesin! 🤖\n\n🔹 Machine Learning - Mesin belajar dari data\n🔹 Deep Learning - Neural network berlapis\n🔹 NLP - Pemrosesan bahasa alami\n🔹 Computer Vision - Pengenalan gambar\n\nIngin tahu lebih lanjut tentang bidang AI mana?",
+    'machine learning': "Machine Learning adalah cabang AI di mana komputer belajar dari data tanpa diprogram secara eksplisit! 📊\n\nJenis-jenis ML:\n• Supervised Learning - Belajar dari data berlabel\n• Unsupervised Learning - Menemukan pola sendiri\n• Reinforcement Learning - Belajar dari reward/punishment\n\nContoh nyata: spam filter email, rekomendasi Spotify, deteksi wajah di kamera HP!",
+    'kursus': "Rekomendasi kursus berdasarkan level! 📚\n\n🟢 Pemula:\n• Python untuk Pemula (4.9⭐)\n• HTML & CSS Dasar\n• Logika Pemrograman\n\n🟡 Menengah:\n• Data Science dengan Python\n• Web Development Full-Stack\n• UI/UX Design\n\n🔴 Lanjutan:\n• Machine Learning Engineer\n• Cloud Architecture\n\nKamu tertarik di bidang apa?",
+    'belajar': "Tips belajar efektif dengan LearnAI! 💡\n\n1️⃣ Belajar konsisten 30-60 menit/hari\n2️⃣ Gunakan teknik Pomodoro (25 menit fokus, 5 menit istirahat)\n3️⃣ Praktik langsung setelah belajar teori\n4️⃣ Ajari orang lain apa yang sudah dipelajari\n5️⃣ Review materi sebelum tidur\n\nAI tutor kami akan membantu kamu tetap di jalur yang benar! 🎯",
+    'algoritma': "Algoritma adalah serangkaian instruksi langkah demi langkah untuk menyelesaikan suatu masalah! 🔢\n\nContoh - Algoritma membuat teh:\n1. Rebus air\n2. Masukkan teh celup ke cangkir\n3. Tuang air panas\n4. Tunggu 3-5 menit\n5. Angkat teh celup\n\nAlgoritma yang baik harus:\n✅ Jelas dan tidak ambigu\n✅ Efisien\n✅ Menghasilkan output yang benar",
+    'harga': "Paket LearnAI yang fleksibel! 💰\n\n🆓 FREE - Rp 0/bulan\n• 5 kursus gratis\n• AI Chat terbatas (10 pesan/hari)\n\n⭐ PRO - Rp 99.000/bulan\n• Akses semua kursus\n• AI Chat unlimited\n• Sertifikat premium\n\n🏢 TEAM - Rp 499.000/bulan\n• Semua fitur Pro\n• Dashboard tim\n• Dedicated support"
+  }
+};
+
+function getResponse(msg) {
+  const lower = msg.toLowerCase();
+  for (const [key, resp] of Object.entries(responses.keywords)) {
+    if (lower.includes(key)) return resp;
+  }
+  return responses.default[Math.floor(Math.random() * responses.default.length)] +
+    "\n\nTopik: \"" + msg + "\"\n\nSaya siap menjelaskan lebih detail. Apa aspek spesifik yang ingin kamu pelajari?";
+}
+
+function openChatbot() {
+  chatOpen = true;
+  document.getElementById('chatWindow').classList.add('open');
+  document.getElementById('fabBtn').style.display = 'none';
+  document.getElementById('chat-input').focus();
+}
+
+function closeChatbot() {
+  chatOpen = false;
+  document.getElementById('chatWindow').classList.remove('open');
+  document.getElementById('fabBtn').style.display = 'flex';
+}
+
+function sendQuickMsg(msg) {
+  if (!chatOpen) openChatbot();
+  document.getElementById('chat-input').value = msg;
+  sendMessage();
+}
+
+function handleKey(e) {
+  if (e.key === 'Enter') sendMessage();
+}
+
+function addMsg(text, type) {
+  const msgs = document.getElementById('chatMessages');
+  const div = document.createElement('div');
+  div.className = 'msg ' + type;
+  div.style.whiteSpace = 'pre-line';
+  div.textContent = text;
+  msgs.appendChild(div);
+  msgs.scrollTop = msgs.scrollHeight;
+}
+
+function sendMessage() {
+  if (isTyping) return;
+  const input = document.getElementById('chat-input');
+  const msg = input.value.trim();
+  if (!msg) return;
+  document.getElementById('quickReplies').style.display = 'none';
+  addMsg(msg, 'user');
+  input.value = '';
+  isTyping = true;
+  const typingDiv = document.createElement('div');
+  typingDiv.className = 'msg typing-indicator';
+  typingDiv.innerHTML = '<span></span><span></span><span></span>';
+  document.getElementById('chatMessages').appendChild(typingDiv);
+  document.getElementById('chatMessages').scrollTop = 999999;
+  setTimeout(() => {
+    typingDiv.remove();
+    addMsg(getResponse(msg), 'bot');
+    isTyping = false;
+  }, 1000 + Math.random() * 1500);
+}
+</script>
+</body>
+</html>
